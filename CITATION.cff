@@ -6,6 +6,7 @@ message: >
 
 title: "RAS_MoM_2D_Point_Matching"
 version: 1.0.0
+doi: "10.5281/zenodo.20737063"
 date-released: 2025-01-01
 license: Apache-2.0
 
