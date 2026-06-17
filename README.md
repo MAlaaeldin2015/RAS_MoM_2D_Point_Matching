@@ -1,5 +1,7 @@
 # RAS_MoM_2D_Point_Matching
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.20737063)
+
 A Fortran 2008 solver for two-dimensional electromagnetic scattering problems,
 implementing the **Random Auxiliary Sources (RAS)** method and the
 **Method of Moments (MoM) with point matching**, including wideband capability
