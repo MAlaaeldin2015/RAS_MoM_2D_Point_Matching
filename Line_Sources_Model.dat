@@ -1,0 +1,16 @@
+8 !! number of sources
+1	1  1.d0  0.d0  0.25d-2  2.5d-3 !! type, orientaion, A_r,A_i, x_s, y_s
+1	1  1.d0  0.d0  -0.25d-2  2.5d-3 !!
+1	1  1.d0  0.d0  0.75d-2  2.5d-3 !!
+1	1  1.d0  0.d0  -0.75d-2  2.5d-3 !!
+1	1  1.d0  0.d0  1.25d-2  2.5d-3 !!
+1	1  1.d0  0.d0  -1.25d-2  2.5d-3 !!
+1	1  1.d0  0.d0  1.75d-2  2.5d-3 !!
+1	1  1.d0  0.d0  -1.75d-2  2.5d-3 !!
+
+
+!! Orientation:
+!! 1- Z-oriented
+!! 2- X-oriented
+!! 3- Y_oriented
+!! note that the oblique incidence part is considered by the cos(theta^i) term from Parameters.dat file

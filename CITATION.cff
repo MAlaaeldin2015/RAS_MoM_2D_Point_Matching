@@ -1,0 +1,256 @@
+cff-version: 1.2.0
+message: >
+  If you use this software, please cite it using the metadata below.
+  For derivative works (including ports to other languages such as Python or C++),
+  you must retain the copyright notice and cite the associated publications listed here.
+
+title: "RAS_MoM_2D_Point_Matching"
+version: 1.0.0
+date-released: 2025-01-01
+license: Apache-2.0
+
+authors:
+  - family-names: "Hassan"
+    given-names: "Mohamed A. Moharram"
+    alias: "Mohamed A. Moharram"
+    orcid: "https://orcid.org/0000-0002-7118-0008"
+
+repository-code: "https://github.com/MAlaaeldin2015/RAS_MoM_2D_Point_Matching"
+
+abstract: >
+  A Fortran 2008 implementation of two complementary electromagnetic scattering
+  solvers for 2D problems: the Random Auxiliary Sources (RAS) method and the
+  Method of Moments (MoM) with point matching. The code supports wideband
+  solutions via Asymptotic Waveform Evaluation (AWE) using Taylor series with
+  Pade approximants or Chebyshev expansions. Boundary conditions supported
+  include PEC, PMC, Impedance Boundary Conditions (IBC), and dielectric
+  interfaces. Multi-scatterer problems are handled via an Iterative Farfield
+  Bouncing (IFB) technique. Superquadric and arbitrary 2D geometries are
+  supported.
+
+keywords:
+  - "electromagnetic scattering"
+  - "Method of Moments"
+  - "Random Auxiliary Sources"
+  - "Asymptotic Waveform Evaluation"
+  - "2D scattering"
+  - "Fortran"
+  - "computational electromagnetics"
+
+# =============================================================================
+# Associated publications — listed in chronological order
+# =============================================================================
+references:
+
+  # ---------------------------------------------------------------------------
+  # 1995 — ACES Journal (IBC formulation basis — third-party reference)
+  # ---------------------------------------------------------------------------
+  - type: article
+    title: >
+      Electromagnetic scattering from two dimensional anisotropic impedance
+      objects under oblique plane wave incidence
+    authors:
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+      - family-names: "Kildal"
+        given-names: "Per-Simon"
+    journal: "Applied Computational Electromagnetics Society Journal"
+    volume: 10
+    issue: 3
+    start: 81
+    end: 92
+    year: 1995
+    notes: >
+      Third-party reference. The IBC boundary condition definition and MoM
+      formulation implemented in this code are based on this paper (with
+      corrections to typographical errors in the original). The IBC impedance
+      tensor and the set_MoM_BC_matrices / set_IBC_impedance_matrices routines
+      follow the formulation presented here.
+
+  # ---------------------------------------------------------------------------
+  # 2013 — ACES Conference (original formulation, PEC scatterers)
+  # ---------------------------------------------------------------------------
+  - type: conference-paper
+    title: >
+      Electromagnetic scattering from 2D conducting objects using equivalent
+      randomly distributed sources
+    authors:
+      - family-names: "Moharram"
+        given-names: "Mohamed A."
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    collection-title: >
+      The Applied Computational Electromagnetic Society (ACES) Conference
+    year: 2013
+    notes: >
+      First published formulation of the RAS method for 2D PEC scatterers.
+
+  # ---------------------------------------------------------------------------
+  # 2013 — EuCAP (extension to dielectric scatterers)
+  # ---------------------------------------------------------------------------
+  - type: conference-paper
+    title: >
+      Electromagnetic scattering from 2D dielectric objects using randomly
+      distributed sources
+    authors:
+      - family-names: "Moharram"
+        given-names: "Mohamed A."
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    collection-title: >
+      2013 7th European Conference on Antennas and Propagation (EuCAP)
+    location:
+      name: "Gothenburg, Sweden"
+    start: 1546
+    end: 1549
+    year: 2013
+    notes: >
+      Extension of the RAS method to 2D dielectric scatterers.
+
+  # ---------------------------------------------------------------------------
+  # 2013 — USNC-URSI (efficient frequency-domain RAS technique)
+  # ---------------------------------------------------------------------------
+  - type: conference-paper
+    title: >
+      Efficient frequency domain technique for electromagnetic scattering from
+      arbitrary objects using the Random Auxiliary Sources
+    authors:
+      - family-names: "Moharram"
+        given-names: "Mohamed A."
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    collection-title: >
+      2013 USNC-URSI Radio Science Meeting (Joint with AP-S Symposium)
+    location:
+      name: "Lake Buena Vista, FL, USA"
+    start: 143
+    end: 143
+    year: 2013
+    doi: "10.1109/USNC-URSI.2013.6715449"
+    notes: >
+      Efficient frequency-domain formulation of the RAS approach for
+      arbitrary 2D scatterers.
+
+  # ---------------------------------------------------------------------------
+  # 2013 — IEEE APS/URSI (multi-scatterer domain decomposition)
+  # ---------------------------------------------------------------------------
+  - type: conference-paper
+    title: >
+      Electromagnetic domain decomposition for 2D multi-scatterer problem
+      using randomly distributed sources
+    authors:
+      - family-names: "Moharram"
+        given-names: "Mohamed A."
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    collection-title: >
+      2013 IEEE Antennas and Propagation Society International Symposium
+      (APSURSI)
+    location:
+      name: "Orlando, FL, USA"
+    start: 1310
+    end: 1311
+    year: 2013
+    doi: "10.1109/APS.2013.6711315"
+    notes: >
+      Domain decomposition approach for multi-scatterer problems using RAS
+      with Iterative Farfield Bouncing (IFB).
+
+  # ---------------------------------------------------------------------------
+  # 2015 — IEEE Antennas and Propagation Magazine (primary journal paper)
+  # ---------------------------------------------------------------------------
+  - type: article
+    title: >
+      Electromagnetic Scattering From Two-Dimensional Arbitrary Objects
+      Using Random Auxiliary Sources
+    authors:
+      - family-names: "Moharram"
+        given-names: "Mohamed A."
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    journal: "IEEE Antennas and Propagation Magazine"
+    volume: 57
+    issue: 1
+    start: 204
+    end: 216
+    year: 2015
+    month: 2
+    doi: "10.1109/MAP.2015.2397112"
+    notes: >
+      Primary journal paper presenting the full RAS method for arbitrary 2D
+      objects including PEC, PMC, dielectric, and IBC boundary conditions.
+
+  # ---------------------------------------------------------------------------
+  # 2015 — IEEE ICCEM (RAS overview: efficiency and simplicity)
+  # ---------------------------------------------------------------------------
+  - type: conference-paper
+    title: >
+      The random auxiliary sources method: A simple, fast, and efficient
+      electromagnetic scattering computations approach
+    authors:
+      - family-names: "Moharram"
+        given-names: "Mohamed A."
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    collection-title: >
+      2015 IEEE International Conference on Computational Electromagnetics
+      (ICCEM)
+    location:
+      name: "Hong Kong, China"
+    start: 5
+    end: 7
+    year: 2015
+    doi: "10.1109/COMPEM.2015.7052535"
+    notes: >
+      Conference overview of the RAS method emphasising its simplicity,
+      speed, and computational efficiency.
+
+  # ---------------------------------------------------------------------------
+  # 2017 — URSI GASS (wideband RAS-AWE for smooth conducting cylinders)
+  # ---------------------------------------------------------------------------
+  - type: conference-paper
+    title: >
+      Wideband electromagnetic scattering computations for smooth conducting
+      2D cylinders using the RAS-AWE method
+    authors:
+      - family-names: "Moharram"
+        given-names: "Mohamed A."
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    collection-title: >
+      2017 XXXIInd General Assembly and Scientific Symposium of the
+      International Union of Radio Science (URSI GASS)
+    location:
+      name: "Montreal, QC, Canada"
+    start: 1
+    end: 4
+    year: 2017
+    doi: "10.23919/URSIGASS.2017.8105092"
+    notes: >
+      First application of the combined RAS-AWE wideband method to smooth
+      conducting 2D cylinders.
+
+  # ---------------------------------------------------------------------------
+  # 2019 — IEEE TAP (primary journal paper, combined RAS-AWE wideband)
+  # ---------------------------------------------------------------------------
+  - type: article
+    title: >
+      A Combined Asymptotic Waveform Evaluation and Random Auxiliary Sources
+      Method for Wideband Solutions of General-Purpose EM Problems
+    authors:
+      - family-names: "Hassan"
+        given-names: "Mohamed A. Moharram"
+      - family-names: "Kishk"
+        given-names: "Ahmed A."
+    journal: "IEEE Transactions on Antennas and Propagation"
+    volume: 67
+    issue: 6
+    start: 4010
+    end: 4021
+    year: 2019
+    month: 6
+    doi: "10.1109/TAP.2019.2902665"
+    notes: >
+      Primary journal paper presenting the full combined RAS-AWE method for
+      wideband solutions, including Pade approximants and Chebyshev expansions
+      for general-purpose electromagnetic problems.

@@ -1,0 +1,29 @@
+13  5 !! file identification numbers N_d (Number of Dielectrci Materials), N_{IBC} (Number of the usedIBC boundaries)
+!! Dielectric material format
+!! #id eps_r' eps_r'' mu_r' mu_r''
+2 2.d0 0.d0 1.d0 0.d0
+3 4.d0 0.d-3 1.d0 0.d0
+4 10.2d0 -1.d-3 1.d0 0.d0
+5 2.d0 -1.d-3 1.0d0 0.0d-3
+6 4.d0 0.d0 2.d0 0.d0
+7 20d0 0.d0 1.d0 0.d0
+8 40d0 0.d0 1.d0 0.d0
+9 80d0 0.d0 1.d0 0.d0
+10 1.d0 -0.2d0 2.d0 -0.1d0
+11 -1.d0 -0.1d0 -1.d0 -0.1d-0
+12 -2.d0 -1.d-2 -2.d0 1.0d0
+13 -1.d0 -1.0d-3 -1.d0 0.0d0
+14 -1.d0 -1.0d0 -1.d0 -0.2d0
+!! IBC boundary format
+!! #id eta_{zz}_r eta_{zz}_i eta_{zt}_r eta_{zt}_i eta_{tz}_r eta_{tz}_i eta_{tt}_r eta_{tt}_i
+-2	0.5d0	0.1d0	0.3d0	0.6d0	0.3d0	0.5d0	0.7d0	-0.3d0
+-3	0.d0	-50.d0	0.d0	0.d0	0.d0	0.d0	0.d0	0.d0
+-4	0.d0	-5.d0	0.d0	0.d0	0.d0	0.d0	0.d0	0.d0
+-5	0.d0	0.d0	0.d0	0.d0	0.d0	0.d0	0.d0	-50.d0
+-6	0.d0	-5.d0	0.d0	0.d0	0.d0	0.d0	0.d0	-10.d0
+
+
+
+!! background #id is reserved to be 0 and it is assumed to be free-space
+!! PEC has a reserved #id=1
+!! PMC has a reserved #id=-1

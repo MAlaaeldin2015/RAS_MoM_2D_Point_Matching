@@ -1,0 +1,242 @@
+! =============================================================================
+! Parameters.dat  —  Main configuration file for RAS_MoM_2D_Point_Matching
+! =============================================================================
+!
+! Copyright (c) 2024 Mohamed A. Moharram Hassan
+! Licensed under the Apache License, Version 2.0. See LICENSE for details.
+!
+! FORMAT RULES:
+!   - Values are whitespace-separated on each line.
+!   - Lines beginning with "!" are comments and are IGNORED by the code.
+!   - Inline comments after "!!" are also ignored.
+!   - Integer and real values follow standard Fortran notation.
+!     Use scientific notation where needed, e.g. 30d9 = 30e9.
+!
+! MATERIAL ID CONVENTIONS (defined in materials.dat):
+!   0   = Free-space background (always assumed; not listed in materials.dat)
+!   1   = PEC  (Perfect Electric Conductor) -- reserved
+!  -1   = PMC  (Perfect Magnetic Conductor) -- reserved
+!  >=2  = User-defined dielectric material  (listed in materials.dat)
+!  <=-2 = User-defined IBC material         (listed in materials.dat)
+!
+! =============================================================================
+
+! -----------------------------------------------------------------------------
+! LINE 1: Source type and incident wave angles
+! -----------------------------------------------------------------------------
+! Source_Model   : 0 = Plane wave, 1 = Line source(s) (from Line_Sources_Model.dat)
+! theta_i [deg]  : Elevation angle of incidence (from z-axis)
+! phi_i   [deg]  : Azimuth angle of incidence
+! alpha_i [deg]  : Polarisation angle (0 = TM, 90 = TE)
+!
+1	90	45	45 !! Source_Model=plane wave, theta_i=90, phi_i=45, alpha_i=45
+
+! -----------------------------------------------------------------------------
+! LINE 2: Problem size and solution method flags
+! -----------------------------------------------------------------------------
+! number_of_scatterers  : Number of separate scattering objects (>= 1)
+! RAS_solution_method   : 0 = off, 1 = iterative IFB, 2 = merged single system
+! MoM_solution_method   : 0 = off, 1 = independent per scatterer, 2 = merged once
+!
+1	0	2    !! 1 scatterer; RAS off; MoM merged-once
+
+! -----------------------------------------------------------------------------
+! LINE 3: Scatterer geometry input method (one integer per scatterer)
+! -----------------------------------------------------------------------------
+! For each scatterer specify:
+!   1 = Superquadric curve  -> define with: material_id  cx  cy  a  b  g
+!   2 = From points file    -> define with: material_id  filename
+!
+2 2 1 1 1 1 1 1 1 !! input method per scatterer (only first N values are used)
+
+! -----------------------------------------------------------------------------
+! LINE(S) 4+: Scatterer definition -- one line per scatterer
+! -----------------------------------------------------------------------------
+! Method 1 (Superquadric):  material_id  cx  cy  a  b  g
+!   (cx,cy) = 2D centre [m],  a,b = semi-axes [m],  g = shape exponent
+!   g=2 gives an ellipse;  g->inf approaches a rectangle
+!
+! Method 2 (From file):  material_id  filename
+!   File must contain rows of (x, y) boundary coordinates [m].
+!
+1 box3.dat  !! material_id=1 (PEC), geometry from box3.dat
+
+! -----------------------------------------------------------------------------
+! LINE: Operating frequency
+! -----------------------------------------------------------------------------
+! frequency [Hz]
+!
+30d9 !! 30 GHz
+
+! -----------------------------------------------------------------------------
+! LINE: Simulation mode and sweep settings
+! -----------------------------------------------------------------------------
+! simulation_mode : 0 = single run
+!                   2 = sweep N_group
+!                   3 = sweep samples_per_wavelength
+!                   4 = sweep both N_group and SPW
+!                   5 = iterative (use all provided parameter sets in sequence)
+! plot_current    : 0 = no,  1 = yes (write surface currents to file)
+! samples_Ng      : Number of N_group values provided (modes 2, 4)
+! samples_SPW     : Number of SPW values provided (modes 3, 4)
+! N_Iterations    : Number of repeat runs (mode 5)
+!
+4 1 1 1 1 !! mode=4, plot_current=on, 1 Ng value, 1 SPW value, 1 iteration
+
+! -----------------------------------------------------------------------------
+! LINE: N_group values (samples_Ng integers)
+! -----------------------------------------------------------------------------
+! N_group = number of sources added per RAS iteration.
+! Negative values trigger special internal grouping logic.
+! Provide samples_Ng values separated by spaces.
+!
+-5 100 150 320 640 1280 !! N_group values (only first samples_Ng are used)
+
+! -----------------------------------------------------------------------------
+! LINE: Iteration limits
+! -----------------------------------------------------------------------------
+! max_iteration          : Max RAS iterations before forced termination
+! max_bouncing_iteration : Max IFB iterations for multi-scatterer problems
+!
+100 30 !! max_iteration=100, max_bouncing_iteration=30
+
+! -----------------------------------------------------------------------------
+! LINE: RAS samples per wavelength  (samples_SPW values)
+! -----------------------------------------------------------------------------
+! Controls the density of testing points on the scatterer boundary for RAS.
+! Provide samples_SPW values separated by spaces.
+!
+20 1 !! RAS SPW = 20  (only first samples_SPW values are used)
+
+! -----------------------------------------------------------------------------
+! LINE: MoM samples per wavelength
+! -----------------------------------------------------------------------------
+! Controls the density of testing points for the MoM boundary discretisation.
+!
+20   !! MoM_Samples_per_wavelength = 20
+
+! -----------------------------------------------------------------------------
+! LINE: Non-uniform segmentation settings
+! -----------------------------------------------------------------------------
+! non_uniform_type : 0 = uniform,  1 = polynomial grading,  2 = logarithmic
+! N_o              : Order of the grading function
+! A_segmentation  : Scaling factor A for the grading function
+!
+0 2 1 !! uniform segmentation
+
+! -----------------------------------------------------------------------------
+! LINE: Source placement bounds
+! -----------------------------------------------------------------------------
+! bound         : Max distance of interior random sources from surface [wavelengths]
+! outside_bound : Max distance of exterior random sources from surface [wavelengths]
+!                 (used in dielectric cases only)
+! corner_sep    : Primary angular separation bound near geometric corners
+! corner_sep2   : Secondary angular separation bound near geometric corners
+!
+0.95d0 0.25d0 0.15d0 -0.01d0
+
+! -----------------------------------------------------------------------------
+! LINE: Contour source density
+! -----------------------------------------------------------------------------
+! samples_per_wavelength_contour  : SPW for MAS-style on-surface sources
+! samples_per_wavelength_outside  : SPW for exterior contour sources (dielectric)
+!
+10  6
+
+! -----------------------------------------------------------------------------
+! LINE: Convergence tolerances
+! -----------------------------------------------------------------------------
+! TOL              : Normalised boundary condition residual threshold.
+!                    RAS stops when residual < TOL  (e.g. 4e-3 = 0.4% error).
+! TOL_segmentation : Geometric tolerance for superquadric discretisation
+!                    as a fraction of wavelength.
+!
+4d-3 1.d-3
+
+! -----------------------------------------------------------------------------
+! LINE: MoM activation and field observation settings
+! -----------------------------------------------------------------------------
+! MoM_activation_flag : 0 = MoM off
+!                        1 = MoM on (full matrix solution)
+!                        2 = Analytic reference solution (cylinder only)
+!                        3 = Near-field colour map at radius R_probes_in
+!                        4 = Solution bandwidth calculation (RAS + MoM)
+!                        5 = Solution bandwidth calculation (RAS only)
+! R_probes_in         : Radial position of field observation probes [m]
+! R_calc_in           : Radius within which scattered fields are evaluated [m]
+!
+1 3. 5.07
+
+! -----------------------------------------------------------------------------
+! LINE: MoM integral equation formulation (IBC problems only)
+! -----------------------------------------------------------------------------
+! FormulationType : 1 = EFIE  (Electric Field Integral Equation, TM-dominant)
+!                   2 = MFIE  (Magnetic Field Integral Equation, TE-dominant)
+!                   3 = CFIE  (Combined Field Integral Equation)
+!                   4 = IBC formulation as in Kishk's original derivation
+!
+3 !! CFIE
+
+! -----------------------------------------------------------------------------
+! LINE: Source placement procedure
+! -----------------------------------------------------------------------------
+! Source_Placement : 1 = MAS only (interior contour, deterministic)
+!                    2 = RAS only (fully random interior placement)
+!                    3 = MAS + RAS (contour seeds + random fill)
+!
+2 !! RAS (all random)
+
+! -----------------------------------------------------------------------------
+! LINE: Contour sources polarisation type
+! -----------------------------------------------------------------------------
+! Contour_Sources_Type : 1 = Electric line sources
+!                         2 = Magnetic line sources
+!                         3 = Hybrid (randomly assigned per source)
+!                         4 = Auto  (chosen by the solver per boundary type)
+!
+4 !! Auto
+
+! -----------------------------------------------------------------------------
+! LINE: Linear system solver settings
+! -----------------------------------------------------------------------------
+! Matrix_Solution_Method      : 1 = Cholesky LDL* decomposition (fastest)
+!                                2 = LAPACK zhesv Hermitian solver (robust)
+!                                3 = SVD-based pseudoinverse (most robust,
+!                                    needed for ill-conditioned systems)
+!                                4 = Preconditioned LAPACK zhesv
+! MAX_ALLOWED_CONDITION_NUMBER : SVD truncation parameter: singular values
+!                                below S_max / this value are discarded.
+!                                Only relevant when method = 3.
+! Y_mat_norm_limit             : Normalised diagonal threshold: DOFs whose
+!                                normalised diagonal falls below this value
+!                                are zeroed out before solving.
+!                                Only relevant when method = 2 or 4.
+!
+2 1d5 0.1d0
+
+! -----------------------------------------------------------------------------
+! LINE: Wideband (AWE) solution settings
+! -----------------------------------------------------------------------------
+! Wideband_type  : 0 = off (single frequency)
+!                  1 = AWE on: Taylor series + Pade approximant comparison
+! N_taylor       : Order of the Taylor series expansion in frequency
+! Pade_L         : Number of poles in the [L/M] Pade approximant
+! fl_r           : Lower frequency bound as ratio f_low  / f_centre
+! fh_r           : Upper frequency bound as ratio f_high / f_centre
+! n_points_freq  : Number of frequency samples in the wideband sweep
+! BW_limit       : Fractional bandwidth threshold for adaptive AWE termination
+!
+0 5 2 0.5 1.5 101 0.1 !! wideband off; if enabled: N=5, L=2, 0.5-1.5xf0, 101 pts
+
+! =============================================================================
+! REFERENCE: Additional scatterer definitions (not read for single-scatterer)
+! =============================================================================
+! When number_of_scatterers > 1, add one definition line per scatterer.
+! Material ID follows the convention at the top of this file.
+!
+! Example: three PEC/IBC/dielectric objects as a multi-scatterer test case:
+!
+! -1 -2.33e-1  2.33e-1 .95d-1 .95d-1 2   !! PEC,   centre=(-0.233, 0.233) m
+! -2 -2.33e-1 -2.33e-1 .95d-1 .95d-1 2   !! IBC,   centre=(-0.233,-0.233) m
+!  2  2.33e-1 -2.33e-1 .95d-1 .95d-1 2   !! Diel., centre=( 0.233,-0.233) m
+! 13  0.0      0.0     .95d-1 .95d-1 2   !! Mat.13, at origin
